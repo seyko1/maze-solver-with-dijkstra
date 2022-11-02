@@ -1,10 +1,9 @@
-﻿namespace PokemonMaze.Enums
+﻿namespace PokemonMaze.Enums;
+
+public enum Direction
 {
-	public enum Direction
-	{
-		North,
-		South,
-		East,
-		West
-	}
+    North,
+    South,
+    East,
+    West
 }

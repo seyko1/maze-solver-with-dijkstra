@@ -1,10 +1,13 @@
 using PokemonMaze.Enums;
+using PokemonMaze.Exceptions;
 using PokemonMaze.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Maze
+namespace PokemonMaze;
+
+public static class Maze
 {
     public static Direction[] GetDirections()
 	{

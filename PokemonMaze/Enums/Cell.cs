@@ -1,13 +1,12 @@
-﻿namespace PokemonMaze.Enums
+﻿namespace PokemonMaze.Enums;
+
+public enum Cell
 {
-	public enum Cell
-	{
-		Cliff,
-		Entrance,
-		Exit,
-		Grass,
-		Ground,
-		Rock,
-		Snow
-	}
+    Cliff,
+    Entrance,
+    Exit,
+    Grass,
+    Ground,
+    Rock,
+    Snow
 }
