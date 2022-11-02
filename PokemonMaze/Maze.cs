@@ -1,4 +1,5 @@
 using PokemonMaze.Enums;
+using PokemonMaze.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,13 @@ public class Maze
 		switch (c)
 		{
 			case 'C': return Cell.Cliff;
-			case 'O': return Cell.Entrance;
+			case 'E': return Cell.Entrance;
 			case 'X': return Cell.Exit;
 			case 'H': return Cell.Grass;
 			case 'G': return Cell.Ground;
 			case 'R': return Cell.Rock;
 			case 'S': return Cell.Snow;
-			default : throw new InvalidArgumentException();
+			default : throw new ArgumentException();
 		}
 	}
 
@@ -104,7 +105,7 @@ public class Maze
 		{
 			for (var j = 0; j < columns; j++)
 			{
-				char c = array[i, j] ? 'X' : 'O';
+				var c = array[i, j] ? "X " : ". " ;
 				output += c + " ";
 			}
 			output += "\n";
@@ -195,7 +196,7 @@ public class Maze
 	/// <param name="y"></param>
 	/// <param name="direction"></param>
 	/// <returns></returns>
-	public static (int, int) NextMove(Cell[,] array, int x, int y, Direction direction)
+	public static (int, int) NextMove(Cell[,] array, int x, int y, Direction direction, bool sliding = false)
     {		
 		(int nextY, int nextX) = NextPosition(x, y, direction);
 		if (IsValid(array, nextX, nextY))
@@ -203,9 +204,14 @@ public class Maze
 			var currentCell = array[y, x];
 			var nextCell    = array[nextY, nextX];
 
-			if (nextCell == Cell.Snow || (nextCell == Cell.Grass && (currentCell != Cell.Snow && currentCell != Cell.Grass)))
+			if (nextCell == Cell.Snow)
             {
-		        (nextY, nextX) = NextMove(array, nextX, nextY, direction);
+		        (nextY, nextX) = NextMove(array, nextX, nextY, direction, true);
+			}
+			
+			if (nextCell == Cell.Grass && (!sliding || (currentCell != Cell.Snow && currentCell != Cell.Grass)))
+			{
+				(nextY, nextX) = NextMove(array, nextX, nextY, direction, true);
 			}
 			return (nextY, nextX);
         }
@@ -311,12 +317,75 @@ public class Maze
 		};
 	}
 
-	public class InvalidArgumentException : Exception { }
-	public class EntranceNotFoundException : Exception { }
+	public static void PrintSteps(List<Step> steps, Cell[,] array)
+	{	
+		foreach (var step in steps) 
+		{
+			Console.WriteLine(step.ToString());
+		}
+	}
 
-	public class Point
+	public static bool[,] GetResolved(Cell[,] array, List<(int, int)> positions)
+	{
+		var rows           = array.GetLength(0);
+		var columns        = array.GetLength(1);
+		var convertedArray = new bool[rows, columns];
+
+		for (var i = 0; i < rows; i++)
+		{
+			for (var j = 0; j < columns; j++)
+			{
+				convertedArray[i, j] = positions.Any(p => p == (i, j));
+			}
+		}
+		return convertedArray;
+	}
+
+	public static (bool[,], int)? ResolveMaze(Cell[,] array)
     {
-		public int x { get; set; }
-		public int y { get; set; }
+		var traveled = new List<Step>();
+		var toGo = new List<Step>();
+		
+		(int y, int x) entrance = FindEntrance(array);
+		
+		toGo.Add(new Step((entrance.y, entrance.x), null, 0));
+		bool isExit = false;
+
+		while (toGo.Any())
+		{
+			Step current = toGo.OrderBy(step => step.distance).First();
+			isExit = IsExit(array, current.peak.x, current.peak.y);
+
+			toGo.Remove(current);
+			traveled.Add(current);
+
+			if (isExit) break;
+
+			foreach (var direction in GetDirections())
+			{
+				(int y, int x) nextPeak = NextMove(array, current.peak.x, current.peak.y, direction); 
+				
+				if (current.peak == nextPeak) continue;
+				if (traveled.Any(step => step.peak == nextPeak)) continue;
+
+				toGo.Add(new Step(nextPeak, current.peak, current.distance + 1));
+			}
+
+			toGo.RemoveAll(step => step.peak == current.peak && step.distance > current.distance);
+		}
+
+		if (!isExit) return null;
+
+		var lastTravel = traveled.Last();
+		var totalDistance = lastTravel.distance;
+		var peaks = new List<(int y, int x)>() { lastTravel.peak };
+
+		for (int i = 0; i < totalDistance; i++)
+		{
+			lastTravel = traveled.Find(step => step.peak == lastTravel.from);
+			peaks.Add(lastTravel.peak);
+		}
+
+		return (GetResolved(array, peaks), totalDistance);
 	}
 }
