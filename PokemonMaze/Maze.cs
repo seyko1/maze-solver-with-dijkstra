@@ -368,10 +368,18 @@ public class Maze
 				if (current.peak == nextPeak) continue;
 				if (traveled.Any(step => step.peak == nextPeak)) continue;
 
-				toGo.Add(new Step(nextPeak, current.peak, current.distance + 1));
-			}
+                var existing = toGo.Find(step => step.peak == nextPeak);
 
-			toGo.RemoveAll(step => step.peak == current.peak && step.distance > current.distance);
+                if (existing is not null)
+                {
+                    existing.distance = current.distance + 1;
+                    existing.from     = current.peak;
+                }
+                else
+                {
+				    toGo.Add(new Step(nextPeak, current.peak, current.distance + 1));
+                }
+			}
 		}
 
 		if (!isExit) return null;
