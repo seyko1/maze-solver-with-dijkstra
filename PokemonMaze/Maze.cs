@@ -37,7 +37,7 @@ public class Maze
 		switch (cell)
 		{
 			case Cell.Cliff   : return 'C';
-			case Cell.Entrance: return 'O';
+			case Cell.Entrance: return 'E';
 			case Cell.Exit    : return 'X';
 			case Cell.Grass   : return 'H';
 			case Cell.Ground  : return 'G';
