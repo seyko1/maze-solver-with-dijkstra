@@ -351,13 +351,17 @@ public static class Maze
 		
 		(int y, int x) entrance = FindEntrance(array);
 		
-		toGo.Add(new Step((entrance.y, entrance.x), null, 0));
-		bool isExit = false;
+		toGo.Add(new Step
+        {
+            Position = (entrance.y, entrance.x),
+            Distance = 0
+        });
 
+		bool isExit = false;
 		while (toGo.Any())
 		{
-			Step current = toGo.OrderBy(step => step.distance).First();
-			isExit = IsExit(array, current.peak.x, current.peak.y);
+			Step current = toGo.OrderBy(step => step.Distance).First();
+			isExit = IsExit(array, current.Position.x, current.Position.y);
 
 			toGo.Remove(current);
 			traveled.Add(current);
@@ -366,21 +370,26 @@ public static class Maze
 
 			foreach (var direction in GetDirections())
 			{
-				(int y, int x) nextPeak = NextMove(array, current.peak.x, current.peak.y, direction); 
+				(int y, int x) nextPosition = NextMove(array, current.Position.x, current.Position.y, direction); 
 				
-				if (current.peak == nextPeak) continue;
-				if (traveled.Any(step => step.peak == nextPeak)) continue;
+				if (current.Position == nextPosition) continue;
+				if (traveled.Any(step => step.Position == nextPosition)) continue;
 
-                var existing = toGo.Find(step => step.peak == nextPeak);
+                var existing = toGo.Find(step => step.Position == nextPosition);
 
                 if (existing is not null)
                 {
-                    existing.distance = current.distance + 1;
-                    existing.from     = current.peak;
+                    existing.Distance = current.Distance + 1;
+                    existing.Previous = current;
                 }
                 else
                 {
-				    toGo.Add(new Step(nextPeak, current.peak, current.distance + 1));
+				    toGo.Add(new Step
+                    {
+                        Position = nextPosition,
+                        Previous = current,
+                        Distance = current.Distance + 1
+                    });
                 }
 			}
 		}
@@ -388,15 +397,15 @@ public static class Maze
 		if (!isExit) return null;
 
 		var lastTravel = traveled.Last();
-		var totalDistance = lastTravel.distance;
-		var peaks = new List<(int y, int x)>() { lastTravel.peak };
+		var totalDistance = lastTravel.Distance;
+		var positions = new List<(int y, int x)>() { lastTravel.Position };
 
 		for (int i = 0; i < totalDistance; i++)
 		{
-			lastTravel = traveled.Find(step => step.peak == lastTravel.from);
-			peaks.Add(lastTravel.peak);
+			lastTravel = lastTravel.Previous;
+			positions.Add(lastTravel.Position);
 		}
 
-		return (GetResolved(array, peaks), totalDistance);
+		return (GetResolved(array, positions), totalDistance);
 	}
 }
