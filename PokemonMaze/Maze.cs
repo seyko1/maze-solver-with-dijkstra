@@ -398,12 +398,12 @@ public static class Maze
 
 		var lastTravel = traveled.Last();
 		var totalDistance = lastTravel.Distance;
-		var positions = new List<(int y, int x)>() { lastTravel.Position };
+		var positions = new List<(int y, int x)>();
 
-		for (int i = 0; i < totalDistance; i++)
+		while (lastTravel is not null)
 		{
-			lastTravel = lastTravel.Previous;
 			positions.Add(lastTravel.Position);
+			lastTravel = lastTravel.Previous;
 		}
 
 		return (GetResolved(array, positions), totalDistance);
