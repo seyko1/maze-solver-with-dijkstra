@@ -129,16 +129,15 @@ Implémentez les trois fonctions suivantes :
 
 ### 5.1 InitArrayValue
 
-Initialise le contenu d’un tableau à deux dimensions avec la valeur précisé en paramètre.
+Initialise le contenu d’un tableau à deux dimensions avec la valeur précisé en argument.
 
 ```csharp
 static void InitArrayValue(bool[,] array, bool b);
 ```
 
-
 ### 5.2 PrintMap
 
-Affiche le caractère X pour chaque case vrai et O pour chaque case fausse.
+Affiche le caractère X pour chaque case vrai et . pour chaque case fausse.
 
 ```csharp
 static void PrintMap(bool[,] array);
@@ -152,8 +151,8 @@ PrintMap(new bool[,]
   { true, true, true }
 });
 // output :
-// X O O
-// X O O
+// X . .
+// X . .
 // X X X
 ```
 
@@ -227,7 +226,7 @@ Implémentez les fonctions suivantes :
 
 ### 7.1 CountValidPath
 
-Renvoie à partir de n’importe quelle position le nombre de chemin possible.
+Renvoie le nombre de chemin possible à partir d'une position.
 
 ```csharp
 static int CountValidPath(Cell[,] array, int x, int y);
@@ -256,7 +255,7 @@ static bool IsDeadEnd(Cell[,] array, int x, int y);
 
 ### 7.3 IsIntersection
 
-Renvoie vrai si la position indiquée en paramètre possède plus de deux sorties, c’est-à-dire une intersection.
+Renvoie vrai si la position indiquée en argument possède plus de deux sorties, c’est-à-dire une intersection.
 
 ```csharp
 static bool IsIntersection(Cell[,] array, int x, int y);
@@ -264,7 +263,7 @@ static bool IsIntersection(Cell[,] array, int x, int y);
 
 ### 7.4 IsExit
 
-Calcule et renvoie si la position passée en argument est la sortie.
+Renvoie vrai si la position indiquée en paramètre est la sortie.
 
 ```csharp
 static bool IsExit(Cell[,] array, int x, int y);
