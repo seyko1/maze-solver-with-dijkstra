@@ -6,6 +6,10 @@ public class Step
     public Step? Previous { get; set; }
     public int Distance { get; set; }
 
+    /// <summary>
+    /// Retourne une chaîne string affichant la position d'un sommet, la distance parcourue pour l'atteindre et la position du sommet précédent. 
+    /// </summary>
+    /// <returns>La chaîne string correspondante.</returns>
     public override string ToString()
     {
         return $"{this.Distance} moves -> {GetPositionString(this.Position)} from {GetPositionString(this.Previous?.Position)}";

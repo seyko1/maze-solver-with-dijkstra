@@ -7,9 +7,9 @@ namespace PokemonMaze.Exercises;
 public static class Exercice3 
 {
     /// <summary>
-    /// Affiche dans la console un tableau à deux dimensions de cellule.
+    /// Affiche dans la console un tableau à deux dimensions de type <see cref="Cell"/>.
     /// </summary>
-    /// <param name="array">Tableau de cellules à afficher.</param>
+    /// <param name="array">Tableau de type <see cref="Cell"/> à afficher.</param>
     public static void PrintMaze(Cell[,] array)
     {
         var rows = array.GetLength(0);

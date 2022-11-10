@@ -7,6 +7,12 @@ namespace PokemonMaze;
 
 public static class MazeInitializer
 {
+    /// <summary>
+    /// Initialise un tableau à deux dimensions de type <see cref="Cell"/> selon les longueurs spécifiées.
+    /// </summary>
+    /// <param name="rows">Nombre de lignes d'un tableau à deux dimensions.</param>
+    /// <param name="columns">Nombre de colonnes d'un tableau à deux dimensions.</param>
+    /// <returns>Un tableau à deux dimensions de type <see cref="Cell"/>.</returns>
     public static Cell[,] Init(int rows, int columns)
     {
         var maze   = new Cell[rows, columns];
@@ -35,6 +41,12 @@ public static class MazeInitializer
         return maze;
     }
 
+    /// <summary>
+    /// Retourne une position <see cref="(int, int)"/> aléatoire.
+    /// </summary>
+    /// <param name="rows">Nombre de lignes d'un tableau à deux dimensions.</param>
+    /// <param name="columns">Nombre de colonnes d'un tableau à deux dimensions.</param>
+    /// <returns>Un tuple <see cref="(int, int)"/> correspondant à une position aléatoire.</returns>
     static (int, int) GetRandomSide(int rows, int columns)
     {
         var random = new Random();

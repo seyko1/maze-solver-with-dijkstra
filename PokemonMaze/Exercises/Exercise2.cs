@@ -6,10 +6,10 @@ namespace PokemonMaze.Exercises;
 public static class Exercice2 
 {
     /// <summary>
-    /// Convertit un tableau à deux dimensions de caractère en tableau à deux dimensions de cellules.
+    /// Convertit un tableau à deux dimensions de type <see cref="char"/> en tableau à deux dimensions de type <see cref="Cell"/>.
     /// </summary>
-    /// <param name="array">Tableau de caractère à convertir.</param>
-    /// <returns>Nouvelle instance d'un tableau à deux dimensions de cellules.</returns>
+    /// <param name="array">Tableau de type <see cref="char"/> à convertir.</param>
+    /// <returns>Nouvelle instance d'un tableau à deux dimensions de type <see cref="Cell"/>.</returns>
     public static Cell[,] ConvertMazeToCell(char[,] array)
     {
         var rows           = array.GetLength(0);

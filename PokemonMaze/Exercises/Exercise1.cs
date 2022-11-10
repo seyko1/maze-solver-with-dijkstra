@@ -5,6 +5,11 @@ namespace PokemonMaze.Exercises;
 
 public static class Exercice1 
 {
+    /// <summary>
+    /// Convertit l'argument de type <see cref="char"/> spécifié en valeur de type <see cref="Cell"/>.
+    /// </summary>
+    /// <param name="c">La valeur de type <see cref="char"/> à convertir.</param>
+    /// <returns>La valeur de type <see cref="Cell"/> correspondante.</returns>
     public static Cell ParseCell(char c)
     {
         switch (c)
@@ -20,6 +25,11 @@ public static class Exercice1
         }
     }
 
+    /// <summary>
+    /// Convertit l'argument de type <see cref="Cell"/> spécifié en valeur de type <see cref="char"/>.
+    /// </summary>
+    /// <param name="cell">La valeur de type <see cref="Cell"/> à convertir.</param>
+    /// <returns>La valeur de type <see cref="char"/> correspondante.</returns>
     public static char PrintCell(Cell cell)
     {
         switch (cell)

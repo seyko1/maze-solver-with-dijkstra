@@ -8,7 +8,8 @@ public static class Exercice4
     /// <summary>
     /// Retourne la direction opposée de celle reçue en paramètre.
     /// </summary>
-    /// <param name="d">La direction à analyser.</param>
+    /// <param name="d">La direction à analyser de type <see cref="Direction"/>.</param>
+    /// <returns>La valeur de type <see cref="Direction"/> correspondante.</returns>
     public static Direction GetOpositeDirection(Direction d)
     {
         switch (d)

@@ -12,7 +12,7 @@ namespace PokemonMaze.Exercises;
 public static class Exercice8
 {
     /// <summary>
-    /// Renvoie le plus court chemin d'un tableau à deux dimensions de cellule.
+    /// Renvoie le plus court chemin d'un tableau à deux dimensions de type <see cref="Cell"/>.
     /// </summary>
     /// <param name="array"></param>
     /// <returns>Un tuple contenant le plus court chemin et la distance parcourue.</returns>
